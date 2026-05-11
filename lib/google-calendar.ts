@@ -8,7 +8,7 @@ const auth = new google.auth.GoogleAuth({
 
 const calendar = google.calendar({ version: 'v3', auth })
 
-export async function addEventToCalendar(summary: string, start: string, end: string) {
+export async function addEventToCalendar(summary: string, start: string, end: string): Promise<string> {
   try {
     const event = {
       summary,
@@ -23,14 +23,27 @@ export async function addEventToCalendar(summary: string, start: string, end: st
     }
 
     const response = await calendar.events.insert({
-      calendarId: 'catala.marialuz@gmail.com', // Use the specified calendar
+      calendarId: 'catala.marialuz@gmail.com',
       resource: event,
     })
 
     console.log('Event created:', response.data.htmlLink)
-    return response.data
+    return response.data.id!
   } catch (error) {
     console.error('Error adding event to calendar:', error)
+    throw error
+  }
+}
+
+export async function deleteEventFromCalendar(eventId: string) {
+  try {
+    await calendar.events.delete({
+      calendarId: 'catala.marialuz@gmail.com',
+      eventId,
+    })
+    console.log('Event deleted:', eventId)
+  } catch (error) {
+    console.error('Error deleting event from calendar:', error)
     throw error
   }
 }

@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { parseISO, addHours } from 'date-fns'
 import { addEventToCalendar } from '@/lib/google-calendar'
+import { sendBookingEmail } from '@/lib/email'
 
 const bookingSchema = z.object({
   name: z.string().min(1),
@@ -61,19 +62,46 @@ export async function POST(request: NextRequest) {
       },
     })
 
+    // Send confirmation email
+    try {
+      await sendBookingEmail({
+        clientName: booking.name,
+        clientLastName: booking.lastName,
+        clientEmail: booking.email,
+        serviceType: service.name,
+        dateTime: dateTime,
+        recipientEmail: 'catala.marialuz@gmail.com',
+      })
+    } catch (error) {
+      console.error('Failed to send booking email:', error)
+      // Don't fail the booking if email fails
+    }
+
     // Add to Google Calendar
     try {
-      await addEventToCalendar(
+      console.log('Adding event to calendar...')
+      const eventId = await addEventToCalendar(
         `${booking.name} ${booking.lastName} - ${service.name}`,
         dateTime.toISOString(),
         endTime.toISOString()
       )
+      console.log(`Event created with ID: ${eventId}`)
+      
+      // Update booking with event ID
+      const updatedBooking = await prisma.booking.update({
+        where: { id: booking.id },
+        data: { eventId },
+        include: {
+          service: true,
+        },
+      })
+      console.log(`Booking updated with eventId: ${eventId}`)
+      return NextResponse.json(updatedBooking, { status: 201 })
     } catch (error) {
       console.error('Failed to add to calendar:', error)
-      // Don't fail the booking if calendar fails
+      // Still return the booking even if calendar fails
+      return NextResponse.json(booking, { status: 201 })
     }
-
-    return NextResponse.json(booking, { status: 201 })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.errors }, { status: 400 })

@@ -26,5 +26,6 @@ model Booking {
   serviceId Int
   service   Service  @relation(fields: [serviceId], references: [id])
   dateTime  DateTime
+  eventId   String?  // Google Calendar event ID
   createdAt DateTime @default(now())
 }
