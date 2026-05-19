@@ -29,3 +29,25 @@ model Booking {
   eventId   String?  // Google Calendar event ID
   createdAt DateTime @default(now())
 }
+
+model Content {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  imageUrl    String?  // URL de la imagen
+  videoUrl    String?  // URL del video o embed
+  order       Int      @default(0)  // Para ordenar el contenido
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AboutUs {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  imageUrl    String?
+  phone       String?
+  email       String?
+  address     String?
+  updatedAt   DateTime @updatedAt
+}

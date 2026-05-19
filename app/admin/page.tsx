@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 
@@ -103,13 +104,22 @@ export default function Admin() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold" style={{ color: '#403B38' }}>Panel de Administración</h1>
-          <button
-            onClick={handleLogout}
-            className="text-white px-4 py-2 rounded hover:shadow-md transition-all"
-            style={{ backgroundColor: '#CDA291' }}
-          >
-            Cerrar Sesión
-          </button>
+          <div className="flex gap-4">
+            <Link
+              href="/admin/content"
+              className="text-white px-4 py-2 rounded hover:shadow-md transition-all"
+              style={{ backgroundColor: '#7A6F6A' }}
+            >
+              Gestionar Contenido
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="text-white px-4 py-2 rounded hover:shadow-md transition-all"
+              style={{ backgroundColor: '#CDA291' }}
+            >
+              Cerrar Sesión
+            </button>
+          </div>
         </div>
 
         {loading ? (
