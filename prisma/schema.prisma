@@ -1,7 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// Schema de base de datos para la aplicación de turnero cosmetología
 
 generator client {
   provider = "prisma-client-js"
@@ -11,43 +8,47 @@ datasource db {
   provider = "sqlite"
 }
 
+// Modelo para los servicios ofrecidos (ej: Lifting facial, Pestañas coreanas)
 model Service {
   id        Int       @id @default(autoincrement())
-  name      String
-  duration  Int       // in minutes
-  bookings  Booking[]
+  name      String    // Nombre del servicio (ej: "Lifting facial")
+  duration  Int       // Duración en minutos
+  bookings  Booking[] // Relación con las reservas
 }
 
+// Modelo para las reservas de turno
 model Booking {
   id        Int      @id @default(autoincrement())
-  name      String
-  lastName  String
-  email     String
-  serviceId Int
+  name      String   // Nombre del cliente
+  lastName  String   // Apellido del cliente
+  email     String   // Email del cliente
+  serviceId Int      // ID del servicio
   service   Service  @relation(fields: [serviceId], references: [id])
-  dateTime  DateTime
-  eventId   String?  // Google Calendar event ID
-  createdAt DateTime @default(now())
+  dateTime  DateTime // Fecha y hora del turno
+  eventId   String?  // ID del evento en Google Calendar
+  createdAt DateTime @default(now()) // Fecha de creación de la reserva
 }
 
+// Modelo para almacenar contenido (fotos/videos de trabajos)
 model Content {
   id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  imageUrl    String?  // URL de la imagen
-  videoUrl    String?  // URL del video o embed
-  order       Int      @default(0)  // Para ordenar el contenido
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  title       String   // Título del trabajo (ej: "Lifting Facial María")
+  description String   // Descripción del trabajo
+  imageUrl    String?  // URL de la imagen (puede ser null si es solo video)
+  videoUrl    String?  // URL del video embed de YouTube (puede ser null si es solo imagen)
+  order       Int      @default(0) // Orden de aparición en la galería
+  createdAt   DateTime @default(now()) // Fecha de creación
+  updatedAt   DateTime @updatedAt // Última fecha de actualización
 }
 
+// Modelo para información de la empresa en la página "Sobre Nosotros"
 model AboutUs {
   id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  imageUrl    String?
-  phone       String?
-  email       String?
-  address     String?
-  updatedAt   DateTime @updatedAt
+  title       String   // Título de la sección (ej: "Cosmética María Luz")
+  description String   // Descripción de la empresa
+  imageUrl    String?  // Foto de la empresa o propietaria
+  phone       String?  // Teléfono de contacto
+  email       String?  // Email de contacto
+  address     String?  // Dirección física
+  updatedAt   DateTime @updatedAt // Última actualización
 }

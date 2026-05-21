@@ -122,12 +122,12 @@ export default function BookingPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen py-8 px-4" style={{ background: 'linear-gradient(135deg, #FFF5F5 0%, #FFF9F7 100%)' }}>
+      <div className="min-h-screen py-8 px-4" style={{ background: 'linear-gradient(135deg, #FFFACD 0%, #FFB3D9 100%)' }}>
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8" style={{ color: '#403B38' }}>Agendar Turno - Cosmetología</h1>
+          <h1 className="text-3xl font-bold text-center mb-8" style={{ color: '#333333' }}>Agendar Turno - Cosmetología</h1>
 
-          <div className="bg-white p-6 rounded-lg shadow-lg mb-6" style={{ boxShadow: '0 4px 20px rgba(205, 162, 145, 0.15)' }}>
-            <h2 className="text-xl font-semibold mb-4" style={{ color: '#403B38' }}>Seleccionar Fecha</h2>
+          <div className="bg-white p-6 rounded-lg shadow-lg mb-6" style={{ boxShadow: '0 4px 20px rgba(255, 179, 217, 0.15)' }}>
+            <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>Seleccionar Fecha</h2>
             <DatePicker
               selected={selectedDate}
               onChange={setSelectedDate}
@@ -136,13 +136,13 @@ export default function BookingPage() {
               minDate={new Date()}
               className="w-full p-2 rounded-md"
               placeholderText="Selecciona una fecha"
-              style={{ borderColor: '#CDA291', color: '#403B38' }}
+              style={{ borderColor: '#FFB3D9', color: '#333333' }}
             />
           </div>
 
           {selectedDate && (
-            <div className="bg-white p-6 rounded-lg shadow-lg mb-6" style={{ boxShadow: '0 4px 20px rgba(205, 162, 145, 0.15)' }}>
-              <h2 className="text-xl font-semibold mb-4" style={{ color: '#403B38' }}>
+            <div className="bg-white p-6 rounded-lg shadow-lg mb-6" style={{ boxShadow: '0 4px 20px rgba(255, 179, 217, 0.15)' }}>
+              <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
                 Horarios Disponibles - {format(selectedDate, 'dd/MM/yyyy', { locale: es })}
               </h2>
               {loading ? (
@@ -156,9 +156,9 @@ export default function BookingPage() {
                       key={index}
                       onClick={() => handleSlotSelect(slot)}
                       className="p-2 rounded border transition-all hover:shadow-md"
-                      style={{ backgroundColor: '#FFF5F5', color: '#403B38', borderColor: '#CDA291' }}
-                      onMouseEnter={(e) => e.target.style.backgroundColor = '#E8D4CC'}
-                      onMouseLeave={(e) => e.target.style.backgroundColor = '#FFF5F5'}
+                      style={{ backgroundColor: '#F0F0F0', color: '#333333', borderColor: '#FFB3D9' }}
+                      onMouseEnter={(e) => e.target.style.backgroundColor = '#CCFF00'}
+                      onMouseLeave={(e) => e.target.style.backgroundColor = '#F0F0F0'}
                     >
                       {format(new Date(slot.start), 'HH:mm')}
                     </button>
@@ -169,45 +169,45 @@ export default function BookingPage() {
           )}
 
           {selectedSlot && (
-            <div className="bg-white p-6 rounded-lg shadow-lg" style={{ boxShadow: '0 4px 20px rgba(205, 162, 145, 0.15)' }}>
-              <h2 className="text-xl font-semibold mb-4" style={{ color: '#403B38' }}>
+            <div className="bg-white p-6 rounded-lg shadow-lg" style={{ boxShadow: '0 4px 20px rgba(255, 179, 217, 0.15)' }}>
+              <h2 className="text-xl font-semibold mb-4" style={{ color: '#333333' }}>
                 Agendar Turno - {format(new Date(selectedSlot.start), 'dd/MM/yyyy HH:mm', { locale: es })}
               </h2>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium" style={{ color: '#403B38' }}>Nombre</label>
+                  <label className="block text-sm font-medium" style={{ color: '#333333' }}>Nombre</label>
                   <input
                     {...register('name')}
                     className="w-full p-2 rounded-md border"
-                    style={{ borderColor: '#CDA291', color: '#403B38' }}
+                    style={{ borderColor: '#FFB3D9', color: '#333333' }}
                   />
-                  {errors.name && <p className="text-sm" style={{ color: '#CDA291' }}>{errors.name.message}</p>}
+                  {errors.name && <p className="text-sm" style={{ color: '#FFB3D9' }}>{errors.name.message}</p>}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium" style={{ color: '#403B38' }}>Apellido</label>
+                  <label className="block text-sm font-medium" style={{ color: '#333333' }}>Apellido</label>
                   <input
                     {...register('lastName')}
                     className="w-full p-2 rounded-md border"
-                    style={{ borderColor: '#CDA291', color: '#403B38' }}
+                    style={{ borderColor: '#FFB3D9', color: '#333333' }}
                   />
-                  {errors.lastName && <p className="text-sm" style={{ color: '#CDA291' }}>{errors.lastName.message}</p>}
+                  {errors.lastName && <p className="text-sm" style={{ color: '#FFB3D9' }}>{errors.lastName.message}</p>}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium" style={{ color: '#403B38' }}>Email</label>
+                  <label className="block text-sm font-medium" style={{ color: '#333333' }}>Email</label>
                   <input
                     {...register('email')}
                     type="email"
                     className="w-full p-2 rounded-md border"
-                    style={{ borderColor: '#CDA291', color: '#403B38' }}
+                    style={{ borderColor: '#FFB3D9', color: '#333333' }}
                   />
-                  {errors.email && <p className="text-sm" style={{ color: '#CDA291' }}>{errors.email.message}</p>}
+                  {errors.email && <p className="text-sm" style={{ color: '#FFB3D9' }}>{errors.email.message}</p>}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium" style={{ color: '#403B38' }}>Servicio</label>
+                  <label className="block text-sm font-medium" style={{ color: '#333333' }}>Servicio</label>
                   <select
                     {...register('serviceId', { valueAsNumber: true })}
                     className="w-full p-2 rounded-md border"
-                    style={{ borderColor: '#CDA291', color: '#403B38' }}
+                    style={{ borderColor: '#FFB3D9', color: '#333333' }}
                   >
                     {services.map(service => (
                       <option key={service.id} value={service.id}>
@@ -215,15 +215,15 @@ export default function BookingPage() {
                       </option>
                     ))}
                   </select>
-                  {errors.serviceId && <p className="text-sm" style={{ color: '#CDA291' }}>{errors.serviceId.message}</p>}
+                  {errors.serviceId && <p className="text-sm" style={{ color: '#FFB3D9' }}>{errors.serviceId.message}</p>}
                 </div>
                 <button
                   type="submit"
                   disabled={bookingLoading}
-                  className="w-full text-white p-3 rounded-md font-semibold transition-all hover:shadow-lg disabled:opacity-50"
-                  style={{ backgroundColor: '#CDA291' }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#B88E7D'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = '#CDA291'}
+                  className="w-full p-3 rounded-md font-semibold transition-all hover:shadow-lg disabled:opacity-50"
+                  style={{ backgroundColor: '#CCFF00', color: '#333333' }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = '#FFB3D9'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = '#CCFF00'}
                 >
                   {bookingLoading ? 'Agendando...' : 'Agendar Turno'}
                 </button>
