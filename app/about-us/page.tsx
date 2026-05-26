@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import Navbar from '@/app/components/Navbar'
+import Footer from '@/app/components/Footer'
 
 export default function AboutUs() {
   const router = useRouter()
@@ -65,6 +66,8 @@ export default function AboutUs() {
       fontSize: '1.05rem',
       marginBottom: '25px',
       color: '#555555',
+      whiteSpace: 'pre-wrap' as const,
+      wordBreak: 'break-word' as const,
     },
     highlightBox: {
       borderLeft: '4px solid #CCFF00',
@@ -161,6 +164,7 @@ export default function AboutUs() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   )
 }

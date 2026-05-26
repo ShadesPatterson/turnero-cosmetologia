@@ -9,6 +9,7 @@ import { z } from 'zod'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import Navbar from '@/app/components/Navbar'
+import Footer from '@/app/components/Footer'
 
 const bookingSchema = z.object({
   name: z.string().min(1, 'Nombre requerido'),
@@ -232,6 +233,6 @@ export default function BookingPage() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   )
-}

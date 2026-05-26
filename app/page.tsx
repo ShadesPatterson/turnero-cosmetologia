@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 /**
  * Interfaz para el contenido (imágenes/videos) de la galería
@@ -90,44 +91,73 @@ export default function Home() {
             ) : (
               // Grid responsivo de tarjetas de contenido
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {content.map((item) => (
-                  <div
-                    key={item.id}
-                    className="rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
-                    style={{ backgroundColor: 'white' }}
-                  >
-                    {/* Mostrar imagen si existe */}
-                    {item.imageUrl && (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        className="w-full h-64 object-cover"
-                      />
-                    )}
-                    {/* Mostrar video si existe */}
-                    {item.videoUrl && (
-                      <div className="w-full h-64 bg-black flex items-center justify-center">
-                        <iframe
-                          width="100%"
-                          height="100%"
-                          src={item.videoUrl}
-                          title={item.title}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
+                {content.map((item) => {
+                  // Detectar si la URL es de Instagram
+                  const isInstagram = item.imageUrl?.includes('instagram.com')
+                  
+                  // Convertir URL de Instagram a formato de embed
+                  const getInstagramEmbedUrl = (url: string) => {
+                    const postIdMatch = url.match(/\/p\/([^/?]+)/)
+                    if (postIdMatch) {
+                      return `https://www.instagram.com/p/${postIdMatch[1]}/embed`
+                    }
+                    return url
+                  }
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
+                      style={{ backgroundColor: 'white' }}
+                    >
+                      {/* Mostrar imagen si existe */}
+                      {item.imageUrl && !isInstagram && (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="w-full h-64 object-cover"
                         />
+                      )}
+                      
+                      {/* Mostrar embed de Instagram si la URL es de Instagram */}
+                      {item.imageUrl && isInstagram && (
+                        <div className="w-full flex items-center justify-center" style={{ minHeight: '400px', backgroundColor: '#f5f5f5' }}>
+                          <iframe
+                            src={getInstagramEmbedUrl(item.imageUrl)}
+                            width="100%"
+                            height="400"
+                            frameBorder="0"
+                            scrolling="no"
+                            style={{ maxWidth: '100%', margin: '0 auto', display: 'block' }}
+                          />
+                        </div>
+                      )}
+                      
+                      {/* Mostrar video si existe */}
+                      {item.videoUrl && (
+                        <div className="w-full h-64 bg-black flex items-center justify-center">
+                          <iframe
+                            width="100%"
+                            height="100%"
+                            src={item.videoUrl}
+                            title={item.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      )}
+                      {/* Información del trabajo */}
+                      <div className="p-4">
+                        <h3 className="text-xl font-semibold mb-2" style={{ color: '#333333' }}>
+                          {item.title}
+                        </h3>
+                        <p style={{ color: '#555555', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                          {item.description}
+                        </p>
                       </div>
-                    )}
-                    {/* Información del trabajo */}
-                    <div className="p-4">
-                      <h3 className="text-xl font-semibold mb-2" style={{ color: '#333333' }}>
-                        {item.title}
-                      </h3>
-                      <p style={{ color: '#555555' }}>
-                        {item.description}
-                      </p>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             )}
           </div>
@@ -149,6 +179,7 @@ export default function Home() {
           </div>
         </section>
       </div>
+      <Footer />
     </>
   )
 }
