@@ -75,7 +75,7 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       // Retornar errores de validación
-      return NextResponse.json({ error: error.errors }, { status: 400 })
+      return NextResponse.json({ error: error.issues }, { status: 400 })
     }
     console.error(error)
     return NextResponse.json({ error: 'Failed to update about us' }, { status: 500 })
