@@ -52,7 +52,7 @@ export async function addEventToCalendar(summary: string, start: string, end: st
     // Insertar el evento en el calendario
     const response = await calendar.events.insert({
       calendarId: 'catala.marialuz@gmail.com', // Calendario específico
-      resource: event,
+      requestBody: event,
     })
 
     // Log para debugging

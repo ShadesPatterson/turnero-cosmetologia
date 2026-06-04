@@ -11,7 +11,7 @@ datasource db {
 // Modelo para los servicios ofrecidos (ej: Lifting facial, Pestañas coreanas)
 model Service {
   id        Int       @id @default(autoincrement())
-  name      String    // Nombre del servicio (ej: "Lifting facial")
+  name      String    @unique // Nombre del servicio (ej: "Lifting facial")
   duration  Int       // Duración en minutos
   bookings  Booking[] // Relación con las reservas
 }

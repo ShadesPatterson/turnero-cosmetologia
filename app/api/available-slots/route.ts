@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { format, parse, parseISO, addHours, setHours, setMinutes, getDay, startOfDay, endOfDay } from 'date-fns'
-import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz'
 
 const TIMEZONE = 'America/Argentina/Buenos_Aires'
 
@@ -65,6 +64,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ availableSlots, debug: { dayOfWeek, dateParam, slotsCount: slots.length, bookingsCount: bookings.length } })
   } catch (error) {
     console.error(error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    const message = error instanceof Error ? error.message : 'Unknown error'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

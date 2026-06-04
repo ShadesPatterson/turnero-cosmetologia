@@ -137,7 +137,6 @@ export default function BookingPage() {
               minDate={new Date()}
               className="w-full p-2 rounded-md"
               placeholderText="Selecciona una fecha"
-              style={{ borderColor: '#FFB3D9', color: '#333333' }}
             />
           </div>
 
@@ -158,8 +157,8 @@ export default function BookingPage() {
                       onClick={() => handleSlotSelect(slot)}
                       className="p-2 rounded border transition-all hover:shadow-md"
                       style={{ backgroundColor: '#F0F0F0', color: '#333333', borderColor: '#FFB3D9' }}
-                      onMouseEnter={(e) => e.target.style.backgroundColor = '#CCFF00'}
-                      onMouseLeave={(e) => e.target.style.backgroundColor = '#F0F0F0'}
+                      onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#CCFF00'}
+                      onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#F0F0F0'}
                     >
                       {format(new Date(slot.start), 'HH:mm')}
                     </button>
@@ -223,8 +222,8 @@ export default function BookingPage() {
                   disabled={bookingLoading}
                   className="w-full p-3 rounded-md font-semibold transition-all hover:shadow-lg disabled:opacity-50"
                   style={{ backgroundColor: '#CCFF00', color: '#333333' }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = '#FFB3D9'}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = '#CCFF00'}
+                  onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = '#FFB3D9'}
+                  onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = '#CCFF00'}
                 >
                   {bookingLoading ? 'Agendando...' : 'Agendar Turno'}
                 </button>
