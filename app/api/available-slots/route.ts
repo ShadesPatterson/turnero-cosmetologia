@@ -13,7 +13,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Date parameter required' }, { status: 400 })
     }
 
+    // Parse incoming date (expected format: yyyy-MM-dd)
     const date = parse(dateParam, 'yyyy-MM-dd', new Date())
+    if (isNaN(date.getTime())) {
+      return NextResponse.json({ error: 'Invalid date format' }, { status: 400 })
+    }
     const dayOfWeek = getDay(date) // 0 = Sun, 1 = Mon, ..., 6 = Sat
 
     let startHour: number
@@ -56,7 +60,10 @@ export async function GET(request: NextRequest) {
       },
     })
 
-    const bookedTimes = new Set(bookings.map((b: typeof bookings[number]) => b.dateTime.toISOString()))
+    // Normalize booked times to ISO strings (handle Date or string values)
+    const bookedTimes = new Set(
+      bookings.map((b: any) => new Date(b.dateTime).toISOString())
+    )
 
     // Filter available slots
     const availableSlots = slots.filter(slot => !bookedTimes.has(slot.start))
