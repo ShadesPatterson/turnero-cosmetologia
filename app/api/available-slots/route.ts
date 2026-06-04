@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
       },
     })
 
-    const bookedTimes = new Set(bookings.map(b => b.dateTime.toISOString()))
+    const bookedTimes = new Set(bookings.map((b: typeof bookings[number]) => b.dateTime.toISOString()))
 
     // Filter available slots
     const availableSlots = slots.filter(slot => !bookedTimes.has(slot.start))
