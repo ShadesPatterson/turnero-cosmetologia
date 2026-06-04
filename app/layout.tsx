@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Turnero Cosmetología",
-  description: "Reserva turnos fácilmente en Turnero Cosmetología",
+  title: "Catalea Beauty",
+  description: "Reserva turnos fácilmente en Catalea Beauty",
 };
 
 export default function RootLayout({
