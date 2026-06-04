@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import * as PrismaPkg from '@prisma/client'
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
 
 const databaseUrl = process.env.DATABASE_URL ?? 'file:./dev.db'
@@ -7,6 +7,8 @@ const databaseUrl = process.env.DATABASE_URL ?? 'file:./dev.db'
 // In production you should use a remote DB or Prisma Data Proxy and not pass an adapter.
 const isSqliteFile = databaseUrl.startsWith('file:')
 const globalForPrisma = globalThis as unknown as { prisma: any | undefined }
+
+const PrismaClient = (PrismaPkg as any).PrismaClient as new (options?: any) => any
 
 export const prisma: any =
   globalForPrisma.prisma ??
